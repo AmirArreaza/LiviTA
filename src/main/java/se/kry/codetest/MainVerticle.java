@@ -45,7 +45,7 @@ public class MainVerticle extends AbstractVerticle {
 
   private void setRoutes(Router router) {
     router.route("/*").handler(StaticHandler.create());
-    router.get("/service").handler(req -> {
+    router.get("/services").handler(req -> {
 
       poller.pollServices(service, services);
 
@@ -61,7 +61,7 @@ public class MainVerticle extends AbstractVerticle {
               .putHeader("content-type", "application/json")
               .end(new JsonArray(jsonServices).encode());
     });
-    router.post("/service").handler(req -> {
+    router.post("/services").handler(req -> {
       JsonObject jsonBody = req.getBodyAsJson();
       try {
         service.insertService((jsonBody.getString("url"))).setHandler(result -> {
@@ -85,6 +85,9 @@ public class MainVerticle extends AbstractVerticle {
                 .end("FAILED");
       }
     });
+
+
+
   }
 
 }
