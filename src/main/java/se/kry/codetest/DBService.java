@@ -2,26 +2,51 @@ package se.kry.codetest;
 
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Future;
+import io.vertx.core.json.JsonObject;
+import io.vertx.ext.sql.ResultSet;
 import se.kry.codetest.DTO.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DBService extends AbstractVerticle {
 
   private DBConnector connector;
 
   private List<Service> servicesList;
+  private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
 
   public DBService(DBConnector connector) {
     this.connector = connector;
     this.servicesList = new ArrayList<>();
   }
 
-  public Future<Integer> insertService(String url) throws InterruptedException {
-    Future<Integer> futureResult = connector.insertService(url);
+  private Service serviceDataMapper(JsonObject object) {
+    Service newService = new Service();
+    newService.setName(object.getString("name"));
+    newService.setUrl(object.getString("url"));
+    newService.setCreatedAt(handleDate(object.getString("created_at"), formatter));
+    return newService;
+  }
+
+  public void addServices(HashMap<String, String> services) {
+    servicesList.stream().forEach(s -> {
+      System.out.println("Service " + s.getName() + " (" + s.getUrl() + ")");
+      services.put(s.getUrl(), "UNKNOWN");
+    });
+  }
+
+  private Date handleDate(String dateString, SimpleDateFormat formatter) {
+    try {
+      return formatter.parse(dateString);
+    } catch (Exception ex) {
+      System.out.println("Error: " + ex.getMessage());
+      return new Date();
+    }
+  }
+
+  public Future<Integer> insertService(String name, String url) throws InterruptedException {
+    Future<Integer> futureResult = connector.insertService(name, url);
 
     return futureResult;
   }
@@ -30,18 +55,16 @@ public class DBService extends AbstractVerticle {
     String sql = "SELECT * FROM service;";
 
     connector.query(sql).setHandler(fr -> {
-      if(fr.succeeded()){
+      if (fr.succeeded()) {
         System.out.println("Success Rows: " + fr.result().getRows().size());
-        servicesList = fr.result().getRows().stream().map(Service::new).collect(Collectors.toList());
-      }
-      else{
+        ResultSet result = fr.result();
+        for (JsonObject object : result.getRows()) {
+          servicesList.add(serviceDataMapper(object));
+        }
+      } else {
         System.out.println(fr.cause().getMessage());
       }
     });
-  }
-
-  public void addServices(HashMap<String, String> services){
-   servicesList.stream().forEach(s -> services.put(s.getUrl(), "UNKNOWN"));
   }
 
   public Future<Integer> deleteService(String url) {

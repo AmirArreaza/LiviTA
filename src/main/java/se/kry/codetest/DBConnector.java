@@ -59,11 +59,11 @@ public class DBConnector {
     return queryResultFuture;
   }
 
-  public Future<Integer> insertService(String url) {
-    String sql = "INSERT INTO service (url) VALUES (?)";
+  public Future<Integer> insertService(String name, String url) {
+    String sql = "INSERT INTO service (name, url) VALUES (?,?)";
     Future<Integer> future = Future.future();
 
-    client.updateWithParams(sql, new JsonArray().add(url), result -> {
+    client.updateWithParams(sql, new JsonArray().add(name).add(url), result -> {
       if (result.failed()) {
         System.out.println("failed");
         future.fail(result.cause());

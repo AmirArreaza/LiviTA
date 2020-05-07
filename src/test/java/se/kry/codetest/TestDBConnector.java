@@ -22,7 +22,7 @@ public class TestDBConnector {
   void load_test_database(Vertx vertx) {
 
     connector = new DBConnector(vertx, "poller.test.db");
-    connector.query("CREATE TABLE IF NOT EXISTS service (url VARCHAR(128) NOT NULL)");
+    connector.query("CREATE TABLE IF NOT EXISTS service (name VARCHAR(128), url VARCHAR(128), created_at DATETIME DEFAULT CURRENT_TIMESTAMP)");
     service = new DBService(connector);
 
   }
@@ -31,15 +31,15 @@ public class TestDBConnector {
   @DisplayName("Insert a new service into the DB")
   void insert_service(VertxTestContext testContext) throws InterruptedException {
 
-    service.insertService("Test.com").setHandler(result -> {
+    service.insertService("Test Page 1", "Test.com").setHandler(result -> {
       assertTrue(result.succeeded());
       assertEquals(new Integer(1), result.result());
     });
-    service.insertService("Test2.com").setHandler(result -> {
+    service.insertService("Test Page 2", "Test2.com").setHandler(result -> {
       assertTrue(result.succeeded());
       assertEquals(new Integer(1), result.result());
     });
-    service.insertService("Test3.com").setHandler(result -> {
+    service.insertService("Test Page 3", "Test3.com").setHandler(result -> {
       assertTrue(result.succeeded());
       assertEquals(new Integer(1), result.result());
       testContext.completeNow();
@@ -57,7 +57,6 @@ public class TestDBConnector {
     service.getAllServices();
 
     vertx.setPeriodic(500 * 1, timeId -> {
-
       service.addServices(map);
       assertTrue(map.size() > 0);
       testContext.completeNow();
@@ -67,8 +66,13 @@ public class TestDBConnector {
 
   @Test
   @DisplayName("Remove a service")
-  void delete_service(VertxTestContext testContext) throws InterruptedException {
-    service.deleteService("Test3.com").setHandler(result -> {
+  void delete_service_by_url(VertxTestContext testContext) throws InterruptedException {
+    service.insertService("Test Page X", "TestX.com").setHandler(result -> {
+      assertTrue(result.succeeded());
+      assertEquals(new Integer(1), result.result());
+    });
+
+    service.deleteService("TestX.com").setHandler(result -> {
       assertTrue(result.succeeded());
       assertTrue(result.result() > 0);
       testContext.completeNow();

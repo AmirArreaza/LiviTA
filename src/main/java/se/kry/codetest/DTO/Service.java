@@ -1,19 +1,22 @@
 package se.kry.codetest.DTO;
 
-import io.vertx.core.json.JsonObject;
+import java.util.Date;
 
 public class Service {
 
+  private String name;
+
   private String url;
 
-  public Service(String url){
+  private Date createdAt;
+
+  public Service(String name, String url) {
+    this.name = name;
     this.url = url;
   }
 
-  public Service(JsonObject json) {
-    this.url = json.getString("url");
+  public Service() {
   }
-
 
   public String getUrl() {
     return url;
@@ -23,4 +26,19 @@ public class Service {
     this.url = url;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+    this.createdAt = createdAt;
+  }
 }
