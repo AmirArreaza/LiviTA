@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="se.kry.codetest.TestDBConnector" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-05-07T10:29:05" hostname="Amir-Alienware" time="1.141">
+  <properties/>
+  <testcase name="Insert a new service into the DB" classname="se.kry.codetest.TestDBConnector" time="1.141"/>
+  <system-out><![CDATA[Updated no. of rows: 1
+Updated no. of rows: 1
+Updated no. of rows: 1
+]]></system-out>
+  <system-err><![CDATA[May 07, 2020 11:29:05 AM com.mchange.v2.log.MLog 
+INFO: MLog clients using java 1.4+ standard logging.
+May 07, 2020 11:29:05 AM com.mchange.v2.c3p0.C3P0Registry 
+INFO: Initializing c3p0-0.9.5.2 [built 08-December-2015 22:06:04 -0800; debug? true; trace: 10]
+May 07, 2020 11:29:05 AM com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource 
+INFO: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, contextClassLoaderSource -> caller, dataSourceName -> 1hgekg1a91u84h8porlo41|75b72c5e, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> org.sqlite.JDBC, extensions -> {}, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, forceSynchronousCheckins -> false, forceUseNamedDriverClass -> false, identityToken -> 1hgekg1a91u84h8porlo41|75b72c5e, idleConnectionTestPeriod -> 0, initialPoolSize -> 3, jdbcUrl -> jdbc:sqlite:poller.test.db, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 3, numHelperThreads -> 3, preferredTestQuery -> null, privilegeSpawnedThreads -> false, properties -> {}, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, userOverrides -> {}, usesTraditionalReflectiveProxies -> false ]
+]]></system-err>
+</testsuite>

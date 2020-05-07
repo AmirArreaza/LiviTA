@@ -17,50 +17,73 @@ public class MainVerticle extends AbstractVerticle {
   private HashMap<String, String> services = new HashMap<>();
   //TODO use this
   private DBConnector connector;
+  private DBService service;
   private BackgroundPoller poller = new BackgroundPoller();
 
   @Override
   public void start(Future<Void> startFuture) {
     connector = new DBConnector(vertx);
+    service = new DBService(connector);
     Router router = Router.router(vertx);
     router.route().handler(BodyHandler.create());
-    services.put("https://www.kry.se", "UNKNOWN");
-    vertx.setPeriodic(1000 * 60, timerId -> poller.pollServices(services));
+    service.getAllServices();
+
     setRoutes(router);
     vertx
-        .createHttpServer()
-        .requestHandler(router)
-        .listen(8080, result -> {
-          if (result.succeeded()) {
-            System.out.println("KRY code test service started");
-            startFuture.complete();
-          } else {
-            startFuture.fail(result.cause());
-          }
-        });
+            .createHttpServer()
+            .requestHandler(router)
+            .listen(8080, result -> {
+              if (result.succeeded()) {
+                System.out.println("KRY code test service started");
+                startFuture.complete();
+                service.addServices(services);
+              } else {
+                startFuture.fail(result.cause());
+              }
+            });
   }
 
-  private void setRoutes(Router router){
+  private void setRoutes(Router router) {
     router.route("/*").handler(StaticHandler.create());
     router.get("/service").handler(req -> {
+
+      poller.pollServices(service, services);
+
       List<JsonObject> jsonServices = services
-          .entrySet()
-          .stream()
-          .map(service ->
-              new JsonObject()
-                  .put("name", service.getKey())
-                  .put("status", service.getValue()))
-          .collect(Collectors.toList());
+              .entrySet()
+              .stream()
+              .map(service ->
+                      new JsonObject()
+                              .put("name", service.getKey())
+                              .put("status", service.getValue()))
+              .collect(Collectors.toList());
       req.response()
-          .putHeader("content-type", "application/json")
-          .end(new JsonArray(jsonServices).encode());
+              .putHeader("content-type", "application/json")
+              .end(new JsonArray(jsonServices).encode());
     });
     router.post("/service").handler(req -> {
       JsonObject jsonBody = req.getBodyAsJson();
-      services.put(jsonBody.getString("url"), "UNKNOWN");
-      req.response()
-          .putHeader("content-type", "text/plain")
-          .end("OK");
+      try {
+        service.insertService((jsonBody.getString("url"))).setHandler(result -> {
+          if (result.succeeded()) {
+            System.out.println("Rows added: " + result.result());
+            req.response()
+                    .putHeader("content-type", "text/plain")
+                    .end("OK");
+            services.put(jsonBody.getString("url"), "UNKNOWN");
+          } else {
+            System.out.println(result.cause().getMessage());
+            req.response()
+                    .putHeader("content-type", "text/plain")
+                    .end("FAILED");
+          }
+        });
+      } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+        req.response()
+                .putHeader("content-type", "text/plain")
+                .end("FAILED");
+      }
     });
   }
 

@@ -5,3 +5,5 @@ out/
 gradle
 .vertx
 /fullstack-code-test.zip
+/poller.db
+/poller.test.db

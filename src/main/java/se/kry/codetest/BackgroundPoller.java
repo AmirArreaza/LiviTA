@@ -2,14 +2,20 @@ package se.kry.codetest;
 
 import io.vertx.core.Future;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 public class BackgroundPoller {
 
-  public Future<List<String>> pollServices(Map<String, String> services) {
+
+
+  public Future<Void> pollServices(DBService service, Map<String, String> servicesMap) {
+    /*List<Service> servicesList = service.getAllServices();
+    servicesList.stream().forEach(s -> servicesMap.put(s.getUrl(), "UNKNOWN"));
+
+*/
     //TODO
-    return Future.failedFuture("TODO");
+
+     return Future.succeededFuture();
   }
+
 }
