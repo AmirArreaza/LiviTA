@@ -75,4 +75,21 @@ public class DBConnector {
 
     return future;
   }
+
+  public Future<Integer> deleteService(String url) {
+    String sql = "DELETE FROM service WHERE url=?;";
+
+    Future<Integer> future = Future.future();
+
+    client.updateWithParams(sql, new JsonArray().add(url), result -> {
+      if (result.failed()) {
+        System.out.println("failed");
+        future.fail(result.cause());
+      }
+      UpdateResult updateResult = result.result();
+      System.out.println("Updated no. of rows: " + updateResult.getUpdated());
+      future.complete(updateResult.getUpdated());
+    });
+    return future;
+  }
 }

@@ -64,4 +64,17 @@ public class TestDBConnector {
     });
 
   }
+
+  @Test
+  @DisplayName("Remove a service")
+  void delete_service(VertxTestContext testContext) throws InterruptedException {
+    service.deleteService("Test3.com").setHandler(result -> {
+      assertTrue(result.succeeded());
+      assertTrue(result.result() > 0);
+      testContext.completeNow();
+    });
+
+    assertTrue(testContext.awaitCompletion(1, TimeUnit.SECONDS));
+  }
+
 }

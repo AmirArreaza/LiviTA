@@ -44,4 +44,9 @@ public class DBService extends AbstractVerticle {
    servicesList.stream().forEach(s -> services.put(s.getUrl(), "UNKNOWN"));
   }
 
+  public Future<Integer> deleteService(String url) {
+    Future<Integer> futureResult = connector.deleteService(url);
+
+    return futureResult;
+  }
 }

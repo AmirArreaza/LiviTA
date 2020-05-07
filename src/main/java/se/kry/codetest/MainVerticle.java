@@ -8,6 +8,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,6 @@ public class MainVerticle extends AbstractVerticle {
     Router router = Router.router(vertx);
     router.route().handler(BodyHandler.create());
     service.getAllServices();
-
     setRoutes(router);
     vertx
             .createHttpServer()
@@ -48,7 +48,6 @@ public class MainVerticle extends AbstractVerticle {
     router.get("/services").handler(req -> {
 
       poller.pollServices(service, services);
-
       List<JsonObject> jsonServices = services
               .entrySet()
               .stream()
@@ -86,10 +85,34 @@ public class MainVerticle extends AbstractVerticle {
       }
     });
 
-
+    router.delete("/services/:url").handler(req -> {
+      String url = req.request().getParam("url");
+      try{
+        service.deleteService(url).setHandler(result -> {
+          if(result.succeeded()){
+            req.response()
+                    .putHeader("content-type", "text/plain")
+                    .setStatusCode(200)
+                    .end("OK");
+            services.remove(url);
+          }else{
+            System.out.println(result.cause().getMessage());
+            req.response()
+                    .putHeader("content-type", "text/plain")
+                    .setStatusCode(500)
+                    .end("FAILED");
+          }
+        });
+      }catch (Exception ex){
+        System.out.println(ex.getMessage());
+        req.response()
+                .putHeader("content-type", "text/plain")
+                .setStatusCode(500)
+                .end("FAILED");
+      }
+    });
 
   }
-
 }
 
 
