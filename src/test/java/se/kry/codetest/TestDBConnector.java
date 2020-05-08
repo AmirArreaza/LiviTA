@@ -29,15 +29,15 @@ public class TestDBConnector {
   @DisplayName("Insert a new service into the DB")
   void insert_service(VertxTestContext testContext) throws InterruptedException {
 
-    service.insertService("Test Page 1", "Dev.co").setHandler(result -> {
+    service.insertService("Test Page 1", "dev.co").setHandler(result -> {
       assertTrue(result.succeeded());
       assertEquals(new Integer(1), result.result());
     });
-    service.insertService("Test Page 2", "https://www.Google.com").setHandler(result -> {
+    service.insertService("Test Page 2", "https://www.google.com").setHandler(result -> {
       assertTrue(result.succeeded());
       assertEquals(new Integer(1), result.result());
     });
-    service.insertService("Test Page 3", "http://www.Google.com").setHandler(result -> {
+    service.insertService("Test Page 3", "http://www.google.com").setHandler(result -> {
       assertTrue(result.succeeded());
       assertEquals(new Integer(1), result.result());
       testContext.completeNow();
@@ -55,7 +55,7 @@ public class TestDBConnector {
     service.getAllServices();
 
     vertx.setPeriodic(500 * 1, timeId -> {
-      //service.addServices(map);
+      service.addServices(map);
       assertTrue(map.size() > 0);
       testContext.completeNow();
     });

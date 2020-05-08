@@ -42,16 +42,15 @@ public class TestMainVerticle {
   @DisplayName("Start a web server on localhost and insert a service")
   @Timeout(value = 10, timeUnit = TimeUnit.SECONDS)
   void post_service(Vertx vertx, VertxTestContext testContext) {
-    WebClient.create(vertx)
+            WebClient.create(vertx)
             .post(8080, "::1", "/services")
             .sendJsonObject(new JsonObject()
-                            .put("name", "Facebook")
-                            .put("url", "Facebook.com")
+                            .put("name", "facebook")
+                            .put("url", "facebook.com")
                     , response -> testContext.verify(() -> {
-                      assertEquals(200, response.result().statusCode());
+                      assertEquals(201, response.result().statusCode());
                       testContext.completeNow();
                     }));
-
   }
 
 }

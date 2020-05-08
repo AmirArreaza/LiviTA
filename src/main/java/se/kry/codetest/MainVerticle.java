@@ -25,7 +25,6 @@ public class MainVerticle extends AbstractVerticle {
     connector = new DBConnector(vertx);
     service = new DBService(connector);
     poller = new BackgroundPoller(vertx);
-
     Router router = Router.router(vertx);
     router.route().handler(BodyHandler.create());
     service.getAllServices();
@@ -73,16 +72,18 @@ public class MainVerticle extends AbstractVerticle {
             System.out.println("Rows added: " + result.result());
             String serviceURL = jsonBody.getString("url");
             servicesStatus.put(cleanedUrl, "UNKNOWN");
-            poller.pollService(cleanedUrl, servicesStatus).setHandler(done ->{
+            poller.pollService(cleanedUrl, servicesStatus).setHandler(done -> {
               System.out.println("Completed process to poll service " + serviceURL);
               req.response()
                       .putHeader("content-type", "text/plain")
+                      .setStatusCode(201)
                       .end("OK");
             });
           } else {
             System.out.println(result.cause().getMessage());
             req.response()
                     .putHeader("content-type", "text/plain")
+                    .setStatusCode(500)
                     .end(result.cause().getMessage());
           }
         });
@@ -95,15 +96,15 @@ public class MainVerticle extends AbstractVerticle {
     });
     router.delete("/services/:name").handler(req -> {
       String name = req.request().getParam("name");
-      try{
+      try {
         service.deleteService(name).setHandler(result -> {
-          if(result.succeeded()){
+          if (result.succeeded()) {
             req.response()
                     .putHeader("content-type", "text/plain")
                     .setStatusCode(200)
                     .end("OK");
             servicesStatus.remove(name);
-          }else{
+          } else {
             System.out.println(result.cause().getMessage());
             req.response()
                     .putHeader("content-type", "text/plain")
@@ -111,7 +112,7 @@ public class MainVerticle extends AbstractVerticle {
                     .end("FAILED");
           }
         });
-      }catch (Exception ex){
+      } catch (Exception ex) {
         System.out.println(ex.getMessage());
         req.response()
                 .putHeader("content-type", "text/plain")

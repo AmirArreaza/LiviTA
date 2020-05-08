@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="se.kry.codetest.TestMainVerticle" tests="1" skipped="0" failures="1" errors="0" timestamp="2020-05-08T16:27:05" hostname="Amir-Alienware" time="3.226">
+  <properties/>
+  <testcase name="Start a web server on localhost and insert a service" classname="se.kry.codetest.TestMainVerticle" time="3.226">
+    <failure message="java.lang.AssertionError: org.opentest4j.AssertionFailedError: expected: &lt;200&gt; but was: &lt;201&gt;" type="java.lang.AssertionError">java.lang.AssertionError: org.opentest4j.AssertionFailedError: expected: &lt;200&gt; but was: &lt;201&gt;
+	at io.vertx.junit5.VertxExtension.joinActiveTestContexts(VertxExtension.java:235)
+	at io.vertx.junit5.VertxExtension.afterTestExecution(VertxExtension.java:206)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAfterTestExecutionCallbacks$7(TestMethodTestDescriptor.java:205)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:72)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeAllAfterMethodsOrCallbacks$13(TestMethodTestDescriptor.java:230)
+	at java.util.ArrayList.forEach(ArrayList.java:1257)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeAllAfterMethodsOrCallbacks(TestMethodTestDescriptor.java:228)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeAfterTestExecutionCallbacks(TestMethodTestDescriptor.java:204)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:116)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:59)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$4(NodeTestTask.java:108)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:72)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:98)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:74)
+	at java.util.ArrayList.forEach(ArrayList.java:1257)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$4(NodeTestTask.java:112)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:72)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:98)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:74)
+	at java.util.ArrayList.forEach(ArrayList.java:1257)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:38)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$4(NodeTestTask.java:112)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:72)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:98)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:74)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:32)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:51)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:170)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:154)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:90)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:94)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$100(JUnitPlatformTestClassProcessor.java:80)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:71)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:61)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:32)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:93)
+	at com.sun.proxy.$Proxy1.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.stop(TestWorker.java:123)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:35)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:146)
+	at org.gradle.internal.remote.internal.hub.MessageHubBackedObjectConnection$DispatchWrapper.dispatch(MessageHubBackedObjectConnection.java:128)
+	at org.gradle.internal.remote.internal.hub.MessageHub$Handler.run(MessageHub.java:404)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:63)
+	at org.gradle.internal.concurrent.ManagedExecutorImpl$1.run(ManagedExecutorImpl.java:46)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.gradle.internal.concurrent.ThreadFactoryImpl$ManagedThreadRunnable.run(ThreadFactoryImpl.java:55)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.opentest4j.AssertionFailedError: expected: &lt;200&gt; but was: &lt;201&gt;
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:54)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:195)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:152)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:147)
+	at org.junit.jupiter.api.Assertions.assertEquals(Assertions.java:327)
+	at se.kry.codetest.TestMainVerticle.lambda$null$3(TestMainVerticle.java:51)
+	at io.vertx.junit5.VertxTestContext.verify(VertxTestContext.java:284)
+	at se.kry.codetest.TestMainVerticle.lambda$post_service$4(TestMainVerticle.java:50)
+	at io.vertx.ext.web.client.impl.HttpContext.handleDispatchResponse(HttpContext.java:286)
+	at io.vertx.ext.web.client.impl.HttpContext.execute(HttpContext.java:273)
+	at io.vertx.ext.web.client.impl.HttpContext.next(HttpContext.java:251)
+	at io.vertx.ext.web.client.impl.predicate.PredicateInterceptor.handle(PredicateInterceptor.java:69)
+	at io.vertx.ext.web.client.impl.predicate.PredicateInterceptor.handle(PredicateInterceptor.java:32)
+	at io.vertx.ext.web.client.impl.HttpContext.next(HttpContext.java:248)
+	at io.vertx.ext.web.client.impl.HttpContext.fire(HttpContext.java:258)
+	at io.vertx.ext.web.client.impl.HttpContext.dispatchResponse(HttpContext.java:219)
+	at io.vertx.ext.web.client.impl.HttpContext.lambda$null$2(HttpContext.java:342)
+	at io.vertx.core.impl.ContextImpl.executeTask(ContextImpl.java:320)
+	at io.vertx.core.impl.EventLoopContext.lambda$executeAsync$0(EventLoopContext.java:38)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:163)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:404)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:462)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:897)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	... 1 more
+</failure>
+  </testcase>
+  <system-out><![CDATA[Success Rows: 31
+KRY code test service started
+Service BBC (www.bbc.co.uk)
+Service AS (www.as.com)
+Service Dev (dev.co)
+Service Marca (marca.com)
+Service AS (as.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service as (www.as.com)
+Service as (www.as.com)
+Service as (www.as.com)
+Service as (www.as.com)
+Service as (www.as.com)
+Service as (www.as.com)
+Service as (www.as.com)
+Service as (www.as.com)
+Service as (www.as.com)
+Service as (www.as.com)
+Service as (www.as.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Service facebook (facebook.com)
+Reaching -> www.as.com
+Reaching -> as.com
+Reaching -> www.bbc.co.uk
+Reaching -> marca.com
+Reaching -> facebook.com
+Reaching -> dev.co
+URL facebook.com is valid!
+Updated no. of rows: 1
+Rows added: 1
+dev.co request completed!
+Status Code: 200
+www.bbc.co.uk request completed!
+Status Code: 200
+as.com request completed!
+Status Code: 200
+marca.com request completed!
+Status Code: 200
+www.as.com request completed!
+Status Code: 200
+facebook.com request completed!
+Status Code: 200
+Completed process to poll service facebook.com
+facebook.com request completed!
+io.vertx.core.VertxException: Connection was closed
+All calls completed
+]]></system-out>
+  <system-err><![CDATA[May 08, 2020 5:27:05 PM com.mchange.v2.log.MLog 
+INFO: MLog clients using java 1.4+ standard logging.
+May 08, 2020 5:27:06 PM com.mchange.v2.c3p0.C3P0Registry 
+INFO: Initializing c3p0-0.9.5.2 [built 08-December-2015 22:06:04 -0800; debug? true; trace: 10]
+May 08, 2020 5:27:06 PM com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource 
+INFO: Initializing c3p0 pool... com.mchange.v2.c3p0.ComboPooledDataSource [ acquireIncrement -> 3, acquireRetryAttempts -> 30, acquireRetryDelay -> 1000, autoCommitOnClose -> false, automaticTestTable -> null, breakAfterAcquireFailure -> false, checkoutTimeout -> 0, connectionCustomizerClassName -> null, connectionTesterClassName -> com.mchange.v2.c3p0.impl.DefaultConnectionTester, contextClassLoaderSource -> caller, dataSourceName -> 1hgekg1a91w0cq6wkixq3x|10d7de19, debugUnreturnedConnectionStackTraces -> false, description -> null, driverClass -> org.sqlite.JDBC, extensions -> {}, factoryClassLocation -> null, forceIgnoreUnresolvedTransactions -> false, forceSynchronousCheckins -> false, forceUseNamedDriverClass -> false, identityToken -> 1hgekg1a91w0cq6wkixq3x|10d7de19, idleConnectionTestPeriod -> 0, initialPoolSize -> 3, jdbcUrl -> jdbc:sqlite:poller.db, maxAdministrativeTaskTime -> 0, maxConnectionAge -> 0, maxIdleTime -> 0, maxIdleTimeExcessConnections -> 0, maxPoolSize -> 30, maxStatements -> 0, maxStatementsPerConnection -> 0, minPoolSize -> 3, numHelperThreads -> 3, preferredTestQuery -> null, privilegeSpawnedThreads -> false, properties -> {}, propertyCycle -> 0, statementCacheNumDeferredCloseThreads -> 0, testConnectionOnCheckin -> false, testConnectionOnCheckout -> false, unreturnedConnectionTimeout -> 0, userOverrides -> {}, usesTraditionalReflectiveProxies -> false ]
+]]></system-err>
+</testsuite>
