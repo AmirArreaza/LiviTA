@@ -78,8 +78,8 @@ public class DBService extends AbstractVerticle {
     });
   }
 
-  public Future<Integer> deleteService(String url) {
-    Future<Integer> futureResult = connector.deleteService(url);
+  public Future<Integer> deleteService(String name) {
+    Future<Integer> futureResult = connector.deleteService(name);
 
     return futureResult;
   }

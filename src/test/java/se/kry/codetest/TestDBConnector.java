@@ -65,12 +65,12 @@ public class TestDBConnector {
   @Test
   @DisplayName("Remove a service")
   void delete_service_by_url(VertxTestContext testContext) throws InterruptedException {
-    service.insertService("Test Page X", "TestX.com").setHandler(result -> {
+    service.insertService("Test Page X", "testx.com").setHandler(result -> {
       assertTrue(result.succeeded());
       assertEquals(new Integer(1), result.result());
     });
 
-    service.deleteService("TestX.com").setHandler(result -> {
+    service.deleteService("Test Page X").setHandler(result -> {
       assertTrue(result.succeeded());
       assertTrue(result.result() > 0);
       testContext.completeNow();

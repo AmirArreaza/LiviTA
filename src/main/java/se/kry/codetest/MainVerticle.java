@@ -93,16 +93,16 @@ public class MainVerticle extends AbstractVerticle {
                 .end("FAILED");
       }
     });
-    router.delete("/services/:url").handler(req -> {
-      String url = req.request().getParam("url");
+    router.delete("/services/:name").handler(req -> {
+      String name = req.request().getParam("name");
       try{
-        service.deleteService(url).setHandler(result -> {
+        service.deleteService(name).setHandler(result -> {
           if(result.succeeded()){
             req.response()
                     .putHeader("content-type", "text/plain")
                     .setStatusCode(200)
                     .end("OK");
-            servicesStatus.remove(url);
+            servicesStatus.remove(name);
           }else{
             System.out.println(result.cause().getMessage());
             req.response()

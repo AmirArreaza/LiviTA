@@ -76,12 +76,12 @@ public class DBConnector {
     return future;
   }
 
-  public Future<Integer> deleteService(String url) {
-    String sql = "DELETE FROM service WHERE url=?;";
+  public Future<Integer> deleteService(String name) {
+    String sql = "DELETE FROM service WHERE name=?;";
 
     Future<Integer> future = Future.future();
 
-    client.updateWithParams(sql, new JsonArray().add(url), result -> {
+    client.updateWithParams(sql, new JsonArray().add(name), result -> {
       if (result.failed()) {
         System.out.println("failed");
         future.fail(result.cause());
@@ -92,4 +92,6 @@ public class DBConnector {
     });
     return future;
   }
+
+
 }
