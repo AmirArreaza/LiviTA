@@ -59,7 +59,6 @@ public class BackgroundPoller {
 
   public Future<Void> pollService(String url, HashMap<String, String> map) {
     Future<Void> future = Future.future();
-
     client
             .get(80, url, "/")
             .send(ar -> {
@@ -76,4 +75,6 @@ public class BackgroundPoller {
 
     return future;
   }
+
+
 }

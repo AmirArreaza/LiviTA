@@ -48,7 +48,6 @@ public class MainVerticle extends AbstractVerticle {
   private void setRoutes(Router router) {
     router.route("/*").handler(StaticHandler.create());
     router.get("/services").handler(req -> {
-
       List<JsonObject> jsonServices = servicesStatus
               .entrySet()
               .stream()
@@ -65,12 +64,16 @@ public class MainVerticle extends AbstractVerticle {
     router.post("/services").handler(req -> {
       JsonObject jsonBody = req.getBodyAsJson();
       try {
-        service.insertService(jsonBody.getString("name"), jsonBody.getString("url")).setHandler(result -> {
+        String url = jsonBody.getString("url");
+        String name = jsonBody.getString("name");
+
+        final String cleanedUrl = DBService.removePrefixFromUrl(url);
+        service.insertService(name, cleanedUrl).setHandler(result -> {
           if (result.succeeded()) {
             System.out.println("Rows added: " + result.result());
             String serviceURL = jsonBody.getString("url");
-            servicesStatus.put(serviceURL, "UNKNOWN");
-            poller.pollService(serviceURL, servicesStatus).setHandler(done ->{
+            servicesStatus.put(cleanedUrl, "UNKNOWN");
+            poller.pollService(cleanedUrl, servicesStatus).setHandler(done ->{
               System.out.println("Completed process to poll service " + serviceURL);
               req.response()
                       .putHeader("content-type", "text/plain")
@@ -80,7 +83,7 @@ public class MainVerticle extends AbstractVerticle {
             System.out.println(result.cause().getMessage());
             req.response()
                     .putHeader("content-type", "text/plain")
-                    .end("FAILED");
+                    .end(result.cause().getMessage());
           }
         });
       } catch (Exception ex) {

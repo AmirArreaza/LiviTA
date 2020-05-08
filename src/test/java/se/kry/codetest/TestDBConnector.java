@@ -29,15 +29,15 @@ public class TestDBConnector {
   @DisplayName("Insert a new service into the DB")
   void insert_service(VertxTestContext testContext) throws InterruptedException {
 
-    service.insertService("Test Page 1", "Test.com").setHandler(result -> {
+    service.insertService("Test Page 1", "Dev.co").setHandler(result -> {
       assertTrue(result.succeeded());
       assertEquals(new Integer(1), result.result());
     });
-    service.insertService("Test Page 2", "Test2.com").setHandler(result -> {
+    service.insertService("Test Page 2", "https://www.Google.com").setHandler(result -> {
       assertTrue(result.succeeded());
       assertEquals(new Integer(1), result.result());
     });
-    service.insertService("Test Page 3", "Test3.com").setHandler(result -> {
+    service.insertService("Test Page 3", "http://www.Google.com").setHandler(result -> {
       assertTrue(result.succeeded());
       assertEquals(new Integer(1), result.result());
       testContext.completeNow();

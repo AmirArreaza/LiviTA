@@ -45,9 +45,9 @@ public class TestBackgroundPoller {
 
     HashMap<String, String> map = new HashMap<>();
 
-    map.put("Google.com","UNKNOWN");
+    map.put("dev.co","UNKNOWN");
 
-    poller.pollService("Google.com", map).setHandler(done -> {
+    poller.pollService("dev.co", map).setHandler(done -> {
       assertTrue(done.succeeded());
       testContext.completeNow();
     });
