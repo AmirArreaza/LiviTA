@@ -20,11 +20,9 @@ public class TestDBConnector {
 
   @BeforeEach
   void load_test_database(Vertx vertx) {
-
     connector = new DBConnector(vertx, "poller.test.db");
     connector.query("CREATE TABLE IF NOT EXISTS service (name VARCHAR(128), url VARCHAR(128), created_at DATETIME DEFAULT CURRENT_TIMESTAMP)");
     service = new DBService(connector);
-
   }
 
   @Test
@@ -57,7 +55,7 @@ public class TestDBConnector {
     service.getAllServices();
 
     vertx.setPeriodic(500 * 1, timeId -> {
-      service.addServices(map);
+      //service.addServices(map);
       assertTrue(map.size() > 0);
       testContext.completeNow();
     });

@@ -12,7 +12,6 @@ import java.util.*;
 public class DBService extends AbstractVerticle {
 
   private DBConnector connector;
-
   private List<Service> servicesList;
   private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
 
@@ -29,10 +28,10 @@ public class DBService extends AbstractVerticle {
     return newService;
   }
 
-  public void addServices(HashMap<String, String> services) {
+  public void addServices(HashMap<String, String> servicesStatus) {
     servicesList.stream().forEach(s -> {
       System.out.println("Service " + s.getName() + " (" + s.getUrl() + ")");
-      services.put(s.getUrl(), "UNKNOWN");
+      servicesStatus.put(s.getUrl(), "UNKNOWN");
     });
   }
 

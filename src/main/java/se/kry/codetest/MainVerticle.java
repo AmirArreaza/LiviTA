@@ -8,23 +8,24 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.BodyHandler;
 import io.vertx.ext.web.handler.StaticHandler;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainVerticle extends AbstractVerticle {
 
-  private HashMap<String, String> services = new HashMap<>();
-  //TODO use this
+  private HashMap<String, String> servicesStatus = new HashMap<>();
+
+  private BackgroundPoller poller;
   private DBConnector connector;
   private DBService service;
-  private BackgroundPoller poller = new BackgroundPoller();
 
   @Override
   public void start(Future<Void> startFuture) {
     connector = new DBConnector(vertx);
     service = new DBService(connector);
+    poller = new BackgroundPoller(vertx);
+
     Router router = Router.router(vertx);
     router.route().handler(BodyHandler.create());
     service.getAllServices();
@@ -36,7 +37,8 @@ public class MainVerticle extends AbstractVerticle {
               if (result.succeeded()) {
                 System.out.println("KRY code test service started");
                 startFuture.complete();
-                service.addServices(services);
+                service.addServices(servicesStatus);
+                poller.pollServices(servicesStatus);
               } else {
                 startFuture.fail(result.cause());
               }
@@ -47,8 +49,7 @@ public class MainVerticle extends AbstractVerticle {
     router.route("/*").handler(StaticHandler.create());
     router.get("/services").handler(req -> {
 
-      poller.pollServices(service, services);
-      List<JsonObject> jsonServices = services
+      List<JsonObject> jsonServices = servicesStatus
               .entrySet()
               .stream()
               .map(service ->
@@ -56,6 +57,7 @@ public class MainVerticle extends AbstractVerticle {
                               .put("name", service.getKey())
                               .put("status", service.getValue()))
               .collect(Collectors.toList());
+      poller.pollServices(servicesStatus);
       req.response()
               .putHeader("content-type", "application/json")
               .end(new JsonArray(jsonServices).encode());
@@ -66,10 +68,14 @@ public class MainVerticle extends AbstractVerticle {
         service.insertService(jsonBody.getString("name"), jsonBody.getString("url")).setHandler(result -> {
           if (result.succeeded()) {
             System.out.println("Rows added: " + result.result());
-            req.response()
-                    .putHeader("content-type", "text/plain")
-                    .end("OK");
-            services.put(jsonBody.getString("url"), "UNKNOWN");
+            String serviceURL = jsonBody.getString("url");
+            servicesStatus.put(serviceURL, "UNKNOWN");
+            poller.pollService(serviceURL, servicesStatus).setHandler(done ->{
+              System.out.println("Completed process to poll service " + serviceURL);
+              req.response()
+                      .putHeader("content-type", "text/plain")
+                      .end("OK");
+            });
           } else {
             System.out.println(result.cause().getMessage());
             req.response()
@@ -84,7 +90,6 @@ public class MainVerticle extends AbstractVerticle {
                 .end("FAILED");
       }
     });
-
     router.delete("/services/:url").handler(req -> {
       String url = req.request().getParam("url");
       try{
@@ -94,7 +99,7 @@ public class MainVerticle extends AbstractVerticle {
                     .putHeader("content-type", "text/plain")
                     .setStatusCode(200)
                     .end("OK");
-            services.remove(url);
+            servicesStatus.remove(url);
           }else{
             System.out.println(result.cause().getMessage());
             req.response()
@@ -111,7 +116,6 @@ public class MainVerticle extends AbstractVerticle {
                 .end("FAILED");
       }
     });
-
   }
 }
 
